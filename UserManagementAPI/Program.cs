@@ -12,7 +12,19 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<MongoDbSettings>(
     builder.Configuration.GetSection("MongoDb"));
+
 builder.Services.AddSingleton<UserService>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "AllowAllOrigins",
+        policy =>
+        {
+            policy.AllowAnyOrigin()  // Allows requests from any origin
+                  .AllowAnyHeader()  // Allows all headers
+                  .AllowAnyMethod(); // Allows all methods
+        });
+});
 
 var app = builder.Build();
 
@@ -28,5 +40,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("AllowAllOrigins");
 
 app.Run();

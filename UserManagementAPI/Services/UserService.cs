@@ -21,7 +21,7 @@ namespace UserManagementAPI.Services
 
         public List<User> GetAll() => _users.Find(user => true).ToList();
 
-        public User Get(int id) => _users.Find(user => user.Id == id).FirstOrDefault();
+        public User Get(Guid id) => _users.Find(user => user.Id == id).FirstOrDefault();
 
         public User Create(User user)
         {
